@@ -11,7 +11,12 @@
     <groupId>com.ll</groupId>
     <artifactId>exam</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+
+
     <name>SSG</name>
+
     <description>SSG</description>
     <properties>
         <java.version>17</java.version>
@@ -25,6 +30,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
