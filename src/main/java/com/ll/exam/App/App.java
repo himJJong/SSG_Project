@@ -21,8 +21,11 @@ public class App {
                     String content = sc.nextLine().trim();
                     System.out.printf("작가 : ");
                     String author = sc.nextLine().trim();
-                    wiseSayingId++;
-                    System.out.printf("%d번 명언 등록\n",wiseSayingId);
+                    int id = wiseSayingId++;
+
+                    WiseSaying wiseSaying = new WiseSaying(id, content,author);
+
+                    System.out.printf("%d번 명언 등록\n",id);
                     break;
 
 
