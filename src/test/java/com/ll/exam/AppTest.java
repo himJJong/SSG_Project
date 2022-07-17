@@ -2,6 +2,7 @@ package com.ll.exam;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.ll.exam.App.Rq;
+import com.ll.exam.App.Util;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -66,6 +67,11 @@ public class AppTest {
 
         assertEquals(10, id);
         assertEquals(1, no);
+    }
+    @Test
+    void 파일에_내용쓰기(){
+        Util.mkdir("test_data");
+        Util.saveToFile("test_data/1.json", "내용");
     }
 
     @Test
