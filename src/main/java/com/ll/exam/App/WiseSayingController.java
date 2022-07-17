@@ -1,6 +1,7 @@
 package com.ll.exam.App;
 
 
+import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
@@ -30,11 +31,12 @@ public class WiseSayingController {
 
             System.out.printf("명언(기존) : %s\n", foundWiseSaying.content);
             System.out.printf("명언 : ");
-            foundWiseSaying.content = sc.nextLine();
+            String content = sc.nextLine();
             System.out.printf("작가(기존) : %s\n", foundWiseSaying.author);
             System.out.printf("작가 : ");
-            foundWiseSaying.author = sc.nextLine();
+            String author = sc.nextLine();
 
+            wiseSayingRepository.modify(paramId, content, author);
             System.out.printf("%d번 명언이 수정 되었습니다.\n", paramId);
 
         }
@@ -42,8 +44,11 @@ public class WiseSayingController {
         public void list (Rq rq){
             System.out.println("번호 / 작가 / 명언");
             System.out.println("================");
-            for (int i = wiseSayingRepository.wiseSayings.size() - 1; i >= 0; i--) {
-                WiseSaying wiseSaying_ = wiseSayingRepository.wiseSayings.get(i);
+
+            List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
+
+            for (int i = wiseSayings.size() - 1; i >= 0; i--) {
+                WiseSaying wiseSaying_ = wiseSayings.get(i);
                 System.out.printf("%d / %s / %s\n", wiseSaying_.id, wiseSaying_.content, wiseSaying_.author);
             }
         }
@@ -53,12 +58,8 @@ public class WiseSayingController {
             String content = sc.nextLine().trim();
             System.out.printf("작가 : ");
             String author = sc.nextLine().trim();
-            int id = wiseSayingRepository.wiseSayingId++;
-
-            WiseSaying wiseSaying = new WiseSaying(id, content, author);
-            wiseSayingRepository.wiseSayings.add(wiseSaying);
-
-            System.out.printf("%d번 명언 등록\n", id);
+            WiseSaying wiseSaying = wiseSayingRepository.write(content,author);
+            System.out.printf("%d번 명언 등록\n", wiseSaying.id);
         }
 
         public void remove (Rq rq){
@@ -75,7 +76,7 @@ public class WiseSayingController {
                 return;
             }
 
-            wiseSayingRepository.wiseSayings.remove(foundWiseSaying);
+            wiseSayingRepository.remove(paramId);
             System.out.printf("%d번 명언이 삭제 되었습니다.\n", paramId);
 
         }

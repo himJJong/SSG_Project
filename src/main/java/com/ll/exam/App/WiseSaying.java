@@ -1,7 +1,7 @@
 package com.ll.exam.App;
 
 public class WiseSaying extends Object{
-     int id;
+    int id;
     String content;
     String author;
 
