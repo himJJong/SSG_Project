@@ -3,10 +3,11 @@ package com.ll.exam;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.ll.exam.App.Rq;
 import com.ll.exam.App.Util;
+import com.ll.exam.App.WiseSaying;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+
 import java.util.Scanner;
 
 public class AppTest {
@@ -68,6 +69,17 @@ public class AppTest {
         assertEquals(10, id);
         assertEquals(1, no);
     }
+    @Test
+    void 파일에_객체를_저장() {
+        Util.mkdir("test_data");
+        WiseSaying wiseSaying = new WiseSaying(1, "내 사전에 불가능은 없다.", "나폴레옹");
+        Util.saveToFile("test_data/1.json", wiseSaying.toJson());
+
+        String rs = Util.readFromFile("test_data/1.json");
+
+        assertEquals(wiseSaying.toJson(), rs);
+    }
+
     @Test
     void 파일에_내용쓰기(){
         Util.mkdir("test_data");

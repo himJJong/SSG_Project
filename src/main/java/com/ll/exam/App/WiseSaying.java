@@ -19,4 +19,17 @@ public class WiseSaying extends Object{
                 ", author='" + author + '\'' +
                 '}';
     }
+    public String toJson() {
+        return """
+                 {
+                     "id": %d,
+                     "content": "%s",
+                     "author": "%s"
+                 }
+                 """
+                .stripIndent()
+                .formatted(id, content, author)
+                .trim();
+
+    }
 }
