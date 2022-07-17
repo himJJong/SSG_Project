@@ -7,11 +7,11 @@ import java.util.Scanner;
 public class WiseSayingController {
 
     private Scanner sc;
-    private WiseSayingRepository wiseSayingRepository;
+    private WiseSayingService wiseSayingService;
 
     WiseSayingController(Scanner sc) {
         this.sc = sc;
-        wiseSayingRepository = new WiseSayingRepository();
+        wiseSayingService = new WiseSayingService();
     }
 
         public void modify (Rq rq){
@@ -21,7 +21,7 @@ public class WiseSayingController {
                 System.out.println("id를 입력해주세요");
                 return;
             }
-            WiseSaying foundWiseSaying = wiseSayingRepository.findById(paramId);
+            WiseSaying foundWiseSaying = wiseSayingService.findById(paramId);
 
             if(foundWiseSaying == null){
                 System.out.printf("%d번 명언은 존재하지 않아요.\n");
@@ -36,7 +36,7 @@ public class WiseSayingController {
             System.out.printf("작가 : ");
             String author = sc.nextLine();
 
-            wiseSayingRepository.modify(paramId, content, author);
+            wiseSayingService.modify(paramId, content, author);
             System.out.printf("%d번 명언이 수정 되었습니다.\n", paramId);
 
         }
@@ -45,7 +45,7 @@ public class WiseSayingController {
             System.out.println("번호 / 작가 / 명언");
             System.out.println("================");
 
-            List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
+            List<WiseSaying> wiseSayings = wiseSayingService.findAll();
 
             for (int i = wiseSayings.size() - 1; i >= 0; i--) {
                 WiseSaying wiseSaying_ = wiseSayings.get(i);
@@ -58,7 +58,7 @@ public class WiseSayingController {
             String content = sc.nextLine().trim();
             System.out.printf("작가 : ");
             String author = sc.nextLine().trim();
-            WiseSaying wiseSaying = wiseSayingRepository.write(content,author);
+            WiseSaying wiseSaying = wiseSayingService.write(content,author);
             System.out.printf("%d번 명언 등록\n", wiseSaying.id);
         }
 
@@ -69,14 +69,14 @@ public class WiseSayingController {
                 System.out.println("원하시는 id가 존재하지 않습니다.");
                 return;
             }
-            WiseSaying foundWiseSaying = wiseSayingRepository.findById(paramId);
+            WiseSaying foundWiseSaying = wiseSayingService.findById(paramId);
 
             if (foundWiseSaying == null) {
                 System.out.printf("%d번 명언은 존재하지 않습니다.\n", paramId);
                 return;
             }
 
-            wiseSayingRepository.remove(paramId);
+            wiseSayingService.remove(paramId);
             System.out.printf("%d번 명언이 삭제 되었습니다.\n", paramId);
 
         }

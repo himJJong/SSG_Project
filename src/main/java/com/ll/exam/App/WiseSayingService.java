@@ -3,11 +3,11 @@ package com.ll.exam.App;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WiseSayingRepository {
+public class WiseSayingService {
     private List<WiseSaying> wiseSayings;
     private int wiseSayingId;
 
-    WiseSayingRepository(){
+    WiseSayingService(){
         wiseSayings = new ArrayList<>();
         wiseSayingId = 0;
     }
