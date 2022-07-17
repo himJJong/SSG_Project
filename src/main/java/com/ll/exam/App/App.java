@@ -40,9 +40,33 @@ public class App {
                 case "삭제":
                     remove(rq);
                     break;
+
+                case "수정":
+                    modify(rq);
+                    break;
             }
         }
         sc.close();
+    }
+
+    private void modify(Rq rq) {
+        int paramId = rq.getIntParam("id",0);
+
+        if(paramId == 0){
+            System.out.println("원하시는 id가 존재하지 않습니다.");
+            return;
+        }
+        WiseSaying foundWiseSaying = findById(paramId);
+
+        System.out.printf("명언(기존) : %s\n", foundWiseSaying.content);
+        System.out.printf("명언 : ");
+        foundWiseSaying.content = sc.nextLine();
+        System.out.printf("작가(기존) : %s\n", foundWiseSaying.author);
+        System.out.printf("작가 : ");
+        foundWiseSaying.author = sc.nextLine();
+
+        System.out.printf("%d번 명언이 수정 되었습니다.\n",paramId);
+
     }
 
     private void list(Rq rq){
