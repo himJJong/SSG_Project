@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 public class Util {
     public static void saveToFile(String path, String body) {
+        new File(path).delete();
         try (RandomAccessFile stream = new RandomAccessFile(path, "rw");
              FileChannel channel = stream.getChannel();) {
 
@@ -29,10 +30,12 @@ public class Util {
         }
     }
 
+
     public static void mkdir(String path) {
         File dir = new File(path);
         dir.mkdirs();
     }
+
 
     public static String readFromFile(String path) {
         try (RandomAccessFile reader = new RandomAccessFile(path, "r");) {
@@ -48,6 +51,8 @@ public class Util {
         }
         return "";
     }
+
+
     public static Map<String, Object> jsonToMap(String json) {
         if (json.isEmpty()) {
             return null;
@@ -73,6 +78,7 @@ public class Util {
         return map;
     }
 
+
     public static void deleteDir(String path) {
         Path rootPath = Paths.get(path);
         try (Stream<Path> walk = Files.walk(rootPath)) {
@@ -82,7 +88,36 @@ public class Util {
         } catch (IOException e) {
 
         }
+    }
 
+
+    public static void saveNumberToFile(String path, int number) {
+        saveToFile(path, number + "");
+    }
+    public static int readNumberFromFile(String path, int defaultValue) {
+        String rs = readFromFile(path);
+
+        if ( rs == null ) {
+            return defaultValue;
+        }
+
+        if ( rs.isEmpty() ) {
+            return defaultValue;
+        }
+
+        return Integer.parseInt(rs);
+    }
+
+    public static List<String> getFileNamesFromDir(String path) {
+        try (Stream<Path> stream = Files.walk(Paths.get(path), 1)) {
+            return stream
+                    .filter(file -> !Files.isDirectory(file))
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
     }
 }
 class Pair {
