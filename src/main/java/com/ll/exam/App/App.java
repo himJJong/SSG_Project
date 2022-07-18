@@ -3,10 +3,19 @@ package com.ll.exam.App;
 import java.util.Scanner;
 
 public class App {
+    private static String mode = "prod";
     private Scanner sc;
 
-    public App() {
-        sc = new Scanner(System.in);
+    public App(Scanner sc)
+    {
+        this.sc = sc;
+    }
+    public static String getDataBaseDir(){
+        return mode + "_data";
+    }
+
+    public static void setMode(String mode){
+        App.mode = mode;
     }
 
     public void run() {
@@ -19,7 +28,6 @@ public class App {
 
             System.out.printf("명령:");
             String cmd = sc.nextLine().trim();
-
             Rq rq = new Rq(cmd);
 
             switch (rq.getPath()) {
@@ -42,7 +50,6 @@ public class App {
                     break;
             }
         }
-        sc.close();
     }
 }
 

@@ -1,48 +1,36 @@
 package com.ll.exam.App;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WiseSayingService {
-    private List<WiseSaying> wiseSayings;
-    private int wiseSayingId;
 
-    WiseSayingService(){
-        wiseSayings = new ArrayList<>();
-        wiseSayingId = 0;
-    }
-    public WiseSaying findById(int paramId) {
-        for (WiseSaying wiseSaying : wiseSayings) {
-            if (wiseSaying.id == paramId) {
-                return wiseSaying;
-            }
-        }
-        return null;
-    }
+    private WiseSayingRepository wiseSayingRepository;
 
-    public List<WiseSaying> findAll() {
-        return wiseSayings;
+    public WiseSayingService() {
+        wiseSayingRepository = new WiseSayingRepository();
     }
 
     public WiseSaying write(String content, String author) {
-        int id = ++wiseSayingId;
-        WiseSaying wiseSaying = new WiseSaying(id,content,author);
-        wiseSayings.add(wiseSaying);
-
-        return wiseSaying;
+        return wiseSayingRepository.add(content, author);
     }
 
-    public void remove(int paramId) {
-        WiseSaying foundWiseSaying = findById(paramId);
-        wiseSayings.remove(foundWiseSaying);
+    public List<WiseSaying> findAll() {
+        return wiseSayingRepository.findAll();
     }
 
-    public void modify(int paramId, String content, String author) {
-        WiseSaying foundWiseSaying = findById(paramId);
-        foundWiseSaying.content = content;
-        foundWiseSaying.author = author;
+    public WiseSaying findById(int id) {
+        return wiseSayingRepository.findById(id);
+    }
 
+    public boolean modify(int id, String content, String author) {
+        return wiseSayingRepository.modify(id, content, author);
+    }
+
+    public boolean remove(int id) {
+        return wiseSayingRepository.remove(id);
+    }
+
+    public void dumpToJson() {
+        wiseSayingRepository.dumpToJson();
     }
 }
-
-

@@ -1,53 +1,44 @@
-package com.ll.exam;
+package com.ll.exam.App;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.ll.exam.App.Rq;
-import com.ll.exam.App.Util;
-import com.ll.exam.App.WiseSaying;
+import com.ll.exam.TestUtil;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
-
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
     @Test
-    public void 테스트_실험() {
-        int rs = 10 + 20;
-        assertEquals(30, rs);
+    public void 테스트() {
+        assertTrue(1 == 1);
+        assertEquals(1, 1);
     }
+
     @Test
-    public void 문자열을_스캐너의_입력으로_설정(){
-        String input = """
-                등록
-                명언1
-                작가1
-                """.stripIndent();
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        Scanner sc = new Scanner(in);
+    public void 출력을_모니터에_하지_않고_문자열로_얻기() {
+        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
+        System.out.print("안녕");
+        String rs = output.toString();
+        TestUtil.clearSetOutToByteArray(output);
+    }
+
+    @Test
+    public void 스캐너에_키보드가_아닌_문자열을_입력으로_설정() {
+        Scanner sc = TestUtil.genScanner("안녕");
 
         String cmd = sc.nextLine().trim();
-        String content = sc.nextLine().trim();
-        String author = sc.nextLine().trim();
-
-        assertEquals("등록",cmd);
-        assertEquals("명언1",content);
-        assertEquals("작가1",author);
+        assertEquals("안녕", cmd);
     }
+
     @Test
-    public void 표준출력을_리다이렉션하여_결과를_문자열_받기()throws IOException {
-        //표준출력 리다이렉션
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
+    public void 문자열을_파일에_저장() {
+        Util.file.mkdir(App.getDataBaseDir());
+        Util.file.saveToFile(App.getDataBaseDir() + "/1.txt", "안녕");
 
-        System.out.println("안녕");
-        String rs = output.toString().trim();
+        String body = Util.file.readFromFile(App.getDataBaseDir() + "/1.txt", "");
 
-        //표준출력 원상복구
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        output.close();
-
-        assertEquals("안녕", rs);
+        assertEquals("안녕", body);
     }
 }
